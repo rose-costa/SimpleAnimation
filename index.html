@@ -1,0 +1,103 @@
+<html>
+    <header>
+        <style>
+            #container
+            {
+                background-color: #021a02;
+                flex-direction: column;
+            }
+            .btn
+            {
+                padding-right:10;
+                padding-left:10;
+                padding-top: 6;
+                padding-bottom: 6;
+                border-width: 2;
+                border-color: #00ff00;
+                margin: 10;
+                background-color: #028702;
+                color:#ffffff;
+                font-size: 16;
+                border-radius: 10px;
+            }
+            .btn:hover
+            {
+                border-color: #f73838;
+                background-color: #b80303;
+            }
+            .innerContainer{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+        </style>
+        <script>
+            var color=1;
+            var i = 0;
+            var speed=10;
+            var inter;
+            var ctx;
+            var textFieldVisible=false;
+            var shape=0;
+            var width=60;
+            function toggleColor(){
+                color=color==0?1:0;
+            }
+            function toggleSpeed(){
+                window.clearInterval(inter);
+                speed=speed==10?0:10;
+                inter = window.setInterval(function () { myFun(ctx) }, 10-speed);
+            }
+            function toggleWidth(){
+                width=width==60?10:60;
+            }
+            function toggleShape(){
+                shape=shape==0?1:0;
+            }
+            window.onload= function()
+            {
+                var canvas = document.getElementById("myCanvas");
+                ctx = canvas.getContext("2d");
+                
+                ctx.translate(400, 400);
+
+                inter=window.setInterval(function(){myFun()},0);
+            }
+            function myFun()
+            {
+                ctx.lineWidth = 5;
+                if(i%2==0)
+                ctx.fillStyle=getColor(color);
+                else
+                ctx.fillStyle='White';
+                ctx.fillRect(0,0,100,100);
+                i++;
+                shape==0?ctx.rotate(Math.PI / width): ctx.rotate(Math.PI / Math.random()*360);
+                
+            }
+            function getColor(n)
+            {
+                let shades=["#ffffff","#dddddd","#bbbbbb","#999999","#777777","#555555","#333333","#000000"];
+                let colors=["Violet","Indigo","Blue","Green","Yellow","Orange","Red","White"];
+                let rnd=Math.round((Math.random()*8));
+                return n==0?shades[rnd]:colors[rnd];
+            }
+        </script>
+    </header>
+
+    <body>
+        <div id=container>
+            <div class="innerContainer">
+        <button class="btn" onclick="toggleColor()">Toggle Color</button>
+        <button class="btn" onclick="toggleSpeed()">Speed</button>
+        <button class="btn" onclick="toggleShape()">Shape</button>
+
+        <button class="btn" onclick="toggleWidth()">Strip Width</button>
+        </div>
+        <div class="innerContainer">
+        <canvas id="myCanvas" height=750 width=800></canvas>
+        </div>
+        </div>
+    </body>
+</html>
